@@ -1,0 +1,61 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = -Werror -Wall -g -O2$/;"	m
+CPU_ECHO_CMD	mscom_base/mscom.h	/^    CPU_ECHO_CMD,$/;"	e	enum:UpdataType
+ERASE_FPGA_FLASH_CMD	mscom_base/mscom.h	/^    ERASE_FPGA_FLASH_CMD,$/;"	e	enum:UpdataType
+ErrCode	mscom_base/mscom.h	/^    unsigned int ErrCode;$/;"	m	struct:UpdataPacketHeader
+MAGIC	mscom_base/mscom.h	4;"	d
+MCU_JUMP_TO_FLASH_CMD	mscom_base/mscom.h	/^    MCU_JUMP_TO_FLASH_CMD,$/;"	e	enum:UpdataType
+MCU_REPLY_CMD	mscom_base/mscom.h	/^    MCU_REPLY_CMD,$/;"	e	enum:UpdataType
+PACKET_DATA_CRC_ERR	mscom_base/mscom.h	/^    PACKET_DATA_CRC_ERR,$/;"	e	enum:UpdataErrCode
+PACKET_FAIL	mscom_base/mscom.h	/^    PACKET_FAIL,$/;"	e	enum:UpdataErrCode
+PACKET_HEAD_CRC_ERR	mscom_base/mscom.h	/^    PACKET_HEAD_CRC_ERR,$/;"	e	enum:UpdataErrCode
+PACKET_MAGIC	mscom_base/mscom.h	/^    PACKET_MAGIC,$/;"	e	enum:UpdataErrCode
+PACKET_SUCCESS	mscom_base/mscom.h	/^    PACKET_SUCCESS = 0,$/;"	e	enum:UpdataErrCode
+PACKET_UNKNOW	mscom_base/mscom.h	/^    PACKET_UNKNOW$/;"	e	enum:UpdataErrCode
+READ_FPGA_FLASH_CMD	mscom_base/mscom.h	/^    READ_FPGA_FLASH_CMD,$/;"	e	enum:UpdataType
+SER_ERR	serial/serial.h	/^	SER_ERR = -1,$/;"	e	enum:__anon1
+SER_OK	serial/serial.h	/^	SER_OK  =  0,$/;"	e	enum:__anon1
+SER_TO	serial/serial.h	/^	SER_TO  = -2,$/;"	e	enum:__anon1
+TIMEDOUT	serial/serial.c	31;"	d	file:
+UPDATA_MCU_CMD	mscom_base/mscom.h	/^    UPDATA_MCU_CMD = 0,$/;"	e	enum:UpdataType
+UpdataErrCode	mscom_base/mscom.h	/^enum UpdataErrCode$/;"	g
+UpdataPacket	mscom_base/mscom.h	/^typedef struct UpdataPacket$/;"	s
+UpdataPacketHeader	mscom_base/mscom.h	/^typedef struct UpdataPacketHeader$/;"	s
+UpdataPacketHeader_t	mscom_base/mscom.h	/^}UpdataPacketHeader_t;$/;"	t	typeref:struct:UpdataPacketHeader
+UpdataPacket_t	mscom_base/mscom.h	/^}UpdataPacket_t;$/;"	t	typeref:struct:UpdataPacket
+UpdataType	mscom_base/mscom.h	/^enum UpdataType$/;"	g
+WRITE_FPGA_FLASH_CMD	mscom_base/mscom.h	/^    WRITE_FPGA_FLASH_CMD,$/;"	e	enum:UpdataType
+__CRC_H__	crc/crc.h	2;"	d
+__MSCOM_H__	mscom_base/mscom.h	2;"	d
+__SERIAL_H	serial/serial.h	22;"	d
+check_crc	mscom_base/mscom.c	/^int check_crc(UpdataPacket_t *packet)$/;"	f
+clear_rcv_buf	main.c	/^void clear_rcv_buf(int fd)$/;"	f
+crc32	crc/crc.c	/^unsigned int crc32(const char *buf, unsigned int length)  $/;"	f
+crc32tab	crc/crc.c	/^static const unsigned int crc32tab[] = {  $/;"	v	file:
+create_packet	mscom_base/mscom.c	/^int create_packet(UpdataPacket_t *packet, int type, char *data, int size)$/;"	f
+data	mscom_base/mscom.h	/^    void *data;$/;"	m	struct:UpdataPacket
+dcrc	mscom_base/mscom.h	/^    unsigned int dcrc;$/;"	m	struct:UpdataPacketHeader
+dump_packet	main.c	/^void dump_packet(UpdataPacket_t *packet)$/;"	f
+hcrc	mscom_base/mscom.h	/^    unsigned int hcrc;$/;"	m	struct:UpdataPacketHeader
+header	mscom_base/mscom.h	/^    UpdataPacketHeader_t header;$/;"	m	struct:UpdataPacket
+magic	mscom_base/mscom.h	/^    unsigned int magic;$/;"	m	struct:UpdataPacketHeader
+main	main.c	/^int main(int argc, char *argv[])$/;"	f
+objs	Makefile	/^objs = main.o crc\/crc.o mscom_base\/mscom.o serial\/serial.o$/;"	m
+rcv_buf	main.c	/^char rcv_buf[1024] = {0};$/;"	v
+rcv_packet	main.c	/^int rcv_packet(int fd, UpdataPacket_t *packet)$/;"	f
+serialClose	serial/serial.c	/^int serialClose(int fd)$/;"	f
+serialFlush	serial/serial.c	/^void serialFlush(int fd)$/;"	f
+serialOpen	serial/serial.c	/^int serialOpen(const char *device, unsigned int baudrate, unsigned int bits, char parity, unsigned int stop)$/;"	f
+serialRead	serial/serial.c	/^int serialRead(int fd, unsigned char *buffer, int len)$/;"	f
+serialResetPin	serial/serial.c	/^void serialResetPin(int fd, int pin) {$/;"	f
+serialSetPin	serial/serial.c	/^void serialSetPin(int fd, int pin) {$/;"	f
+serialWrite	serial/serial.c	/^int serialWrite(int fd, unsigned char *buffer, int len)$/;"	f
+size	mscom_base/mscom.h	/^    unsigned int size;$/;"	m	struct:UpdataPacketHeader
+target	Makefile	/^target = myserial$/;"	m
+type	mscom_base/mscom.h	/^    unsigned int type;$/;"	m	struct:UpdataPacketHeader
