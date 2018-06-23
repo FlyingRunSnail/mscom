@@ -45,7 +45,11 @@ typedef struct UpdataPacket
 
 
 int create_packet(UpdataPacket_t *packet, int type, char *data, int size);
-int check_crc(UpdataPacket_t *packet);
+int check_packet(UpdataPacket_t *packet);
+void clear_rcv_buf(int fd);
+int rcv_packet(int fd, UpdataPacket_t *packet);
+int send_packet(int fd, UpdataPacket_t *packet);
+void dump_packet(UpdataPacket_t *packet);
 
 #endif
 
