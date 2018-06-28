@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <termios.h>
 #include <unistd.h>
 #include <sys/select.h>
@@ -54,6 +55,7 @@ int check_packet(UpdataPacket_t *packet)
 	if (dcrc != packet->header.dcrc)
 	{
 		printf("dcrc checksum is invalid, rcv: 0x%08x, expect: 0x%08x\n", packet->header.dcrc, dcrc);
+                dump_packet(packet);
 		return -1;
 	}
     }
@@ -111,9 +113,12 @@ int rcv_packet(int fd, UpdataPacket_t *packet)
         do
         {
             size = read(fd, rcv_buf + length, RCV_BUF_LEN - length);
+            if (size == 0)
+            {
+               usleep(4000); 
+               size = read(fd, rcv_buf + length, RCV_BUF_LEN - length);
+            }
             length += size;
-            //usleep(1000);
-
         }while(size > 0);
 
         if (length < sizeof(UpdataPacketHeader_t))
@@ -138,9 +143,29 @@ int rcv_packet(int fd, UpdataPacket_t *packet)
     return -1;
 }
 
+#define __MSCOM_DEBUG__
+#ifdef __MSCOM_DEBUG__
+static void dump_payload(char *buf, unsigned int len)
+{
+    unsigned int i;
+
+    printf("payload: ");
+    for (i = 0; i < len; i++)
+    {
+        printf("%02x ", buf[i]);
+    }
+
+    printf("\n");
+}
+#endif
+
 int send_packet(int fd, UpdataPacket_t *packet)
 {
     int ret;
+    char *send_buf = NULL;
+    int header_len = sizeof(UpdataPacketHeader_t);
+    int payload_len = packet->header.size;
+    int buf_len = header_len + payload_len;
 
     if (!packet)
     {
@@ -148,21 +173,30 @@ int send_packet(int fd, UpdataPacket_t *packet)
         return -1;
     }
 
-    ret = write(fd, (char *)(&packet->header), sizeof(UpdataPacketHeader_t));
-    if (ret < 0)
+    send_buf = (char *)malloc(buf_len);
+    if (!send_buf)
     {
-        printf("send packet header failed.\n");
-        tcflush(fd,TCOFLUSH); 
+        printf("alloc send_buf failed.\n");
         return -1;
     }
 
-    ret = write(fd, (char *)(packet->data), packet->header.size);
+    memset(send_buf, 0, buf_len);
+    memcpy(send_buf, (char *)&(packet->header), header_len);
+    memcpy(send_buf + header_len, (char *)packet->data, payload_len);
+
+    //dump_packet(packet);
+    //dump_payload(send_buf, buf_len);
+
+    ret = write(fd, (char *)send_buf, buf_len);
     if (ret < 0)
     {
+        free(send_buf);
         printf("send packet payload failed.\n");
         tcflush(fd,TCOFLUSH); 
         return -1;
     }
+    
+    free(send_buf);
 
     return 0;
 }
@@ -191,6 +225,8 @@ void dump_packet(UpdataPacket_t *packet)
         {
             printf("%02x ", buf[i]);
         }
+
+	printf("\n");
     }
 }
 
