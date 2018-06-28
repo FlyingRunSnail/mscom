@@ -1,37 +1,26 @@
 target = myserial
-objs = main.o crc/crc.o packet/mscom.o serial/serial.o app/app.o
+objs = main.o crc/crc.o packet/mscom.o serial/serial.o app/app.o ispload/stm32.o ispload/stm32isp.o ispload/serial.o ispload/memmap.o ispload/hexfile.o ispload/term.o
 #CC=gcc
 CC := /opt/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc
 #CFLAGS = -Werror -Wall -g -O2
 CFLAGS = -g -O2
+RM := rm -rf
 
 all:$(objs)
 	$(CC) -o $(target) $^
 	cp $(target) /home/huyong/work/
 
 
-main.o:main.c
-	$(CC) -c $^ $(CFLAGS)
-
-
-crc.o:crc.c
-	$(CC) -c $^ $(CFLAGS)
-
-mscom.o:mscom.c
-	$(CC) -c $^ $(FLAGS)
-
-serial.o:serial.c
-	$(CC) -c $^ $(FLAGS)
-
-app.o:app.c
-	$(CC) -c $^ $(FLAGS)
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY:clean
 
 clean:
-	rm -f *.o
-	rm -f crc/*.o
-	rm -f packet/*.o
-	rm -f serial/*.o
-	rm -f app/*.o
-	rm -f $(target)
+	$(RM) *.o
+	$(RM) crc/*.o
+	$(RM) packet/*.o
+	$(RM) serial/*.o
+	$(RM) app/*.o
+	$(RM) ispload/*.o
+	$(RM) $(target)

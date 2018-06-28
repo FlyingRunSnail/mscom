@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <errno.h>
+#include <unistd.h>
 #include "crc/crc.h"
 #include "packet/mscom.h"
 #include "serial/serial.h"
 #include "app/app.h"
+#include "ispload/stm32isp.h"
 
 #if 0
 static void help(void)
@@ -17,6 +19,7 @@ int main(int argc, char *argv[])
     int fd = 0;
     int err;
     char *dev_name = NULL;
+    char *filename;
     
 #if  0  
     int i = 0;
@@ -29,8 +32,27 @@ int main(int argc, char *argv[])
         return -1;
     }
 #endif    
-
     dev_name = argv[1];
+    filename = argv[2];
+   
+    err =  stm32isp_init(dev_name, 115200, DTR, RTS);
+    //err =  stm32isp_init(dev_name, 500000, DTR, RTS);
+    if (err != STM_OK)
+    {
+        printf("stm32isp init failed.\n");
+	return -1;
+    }
+
+    err = stm32isp_load(filename);
+    if (err != STM_OK)
+    {
+        printf("stm32isp load failed.\n");
+        stm32isp_exit();
+        return -1;
+    }
+
+    stm32isp_exit();
+
     fd = open_serial(dev_name, 115200, 8, 'N', 1);
     if (fd < 0)
     {
@@ -131,12 +153,21 @@ int main(int argc, char *argv[])
     }
 #endif
 
-    err = ping_cmd(fd, argc - 2, &argv[2]);
-    if (err != 0)
+    //err = ping_cmd(fd, argc - 2, &argv[2]);
+    while(1)
     {
-        printf("do ping failed.\n");
+        err = get_version(fd);
+        if (err != 0)
+        {
+            printf("get version failed.\n");
+	    sleep(10);
+        }
+	else
+	{
+            printf("get version success.\n");
+	    break;
+	}
     }
-
     close_serial(fd);
 
     return 0;
