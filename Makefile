@@ -1,5 +1,5 @@
 target = myserial
-objs = main.o crc/crc.o mscom_base/mscom.o serial/serial.o app/app.o
+objs = main.o crc/crc.o packet/mscom.o serial/serial.o app/app.o
 #CC=gcc
 CC := /opt/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc
 #CFLAGS = -Werror -Wall -g -O2
@@ -31,7 +31,7 @@ app.o:app.c
 clean:
 	rm -f *.o
 	rm -f crc/*.o
-	rm -f mscom_base/*.o
+	rm -f packet/*.o
 	rm -f serial/*.o
 	rm -f app/*.o
 	rm -f $(target)

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include "crc/crc.h"
-#include "mscom_base/mscom.h"
+#include "packet/mscom.h"
 #include "serial/serial.h"
 #include "app/app.h"
 

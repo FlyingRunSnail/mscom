@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "app.h"
-#include "../mscom_base/mscom.h"
+#include "../packet/mscom.h"
 
 static int packet_check(UpdataPacket_t *packet, unsigned int type)
 {
