@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     dev_name = argv[1];
     filename = argv[2];
    
-    err =  stm32isp_init(dev_name, 115200, DTR, RTS);
+    err =  stm32isp_init(dev_name, 9600, DTR, RTS);
     //err =  stm32isp_init(dev_name, 500000, DTR, RTS);
     if (err != STM_OK)
     {

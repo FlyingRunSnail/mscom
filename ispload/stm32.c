@@ -76,7 +76,7 @@ int stm32Init(const char* port, unsigned int baudrate, int bootp, int reset)
 	int ret = STM_ERR;
 	board.bootp = bootp;
 	board.reset = reset;
-	ret = serialOpen(port, baudrate, 8, 'N', 1);
+	ret = serialOpen(port, baudrate, 8, 'E', 1);
 	if ( ret>0 ) {
 		board.serial_fd = ret;
 		printf("Serial port %s open.\n", port);
