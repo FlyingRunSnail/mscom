@@ -5,7 +5,7 @@
 #include "packet/mscom.h"
 #include "serial/serial.h"
 #include "app/app.h"
-#include "ispload/stm32isp.h"
+#include "ispload/stm32update.h"
 
 #if 0
 static void help(void)
@@ -35,23 +35,23 @@ int main(int argc, char *argv[])
     dev_name = argv[1];
     filename = argv[2];
    
-    err =  stm32isp_init(dev_name, 9600, DTR, RTS);
+    err =  stm32_init();
     //err =  stm32isp_init(dev_name, 500000, DTR, RTS);
-    if (err != STM_OK)
+    if (err != STM32_INIT_OK)
     {
         printf("stm32isp init failed.\n");
 	return -1;
     }
 
-    err = stm32isp_load(filename);
-    if (err != STM_OK)
+    err = stm32_update(dev_name, filename, 0x08000000);
+    if (err != STM32_UPDATE_OK)
     {
         printf("stm32isp load failed.\n");
-        stm32isp_exit();
+        stm32_exit();
         return -1;
     }
 
-    stm32isp_exit();
+    stm32_exit();
 
     fd = open_serial(dev_name, 115200, 8, 'N', 1);
     if (fd < 0)

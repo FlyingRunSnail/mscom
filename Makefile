@@ -1,5 +1,5 @@
 target = myserial
-objs = main.o crc/crc.o packet/mscom.o serial/serial.o app/app.o ispload/stm32.o ispload/stm32isp.o ispload/serial.o ispload/memmap.o ispload/hexfile.o ispload/term.o
+objs = main.o crc/crc.o packet/mscom.o serial/serial.o app/app.o ispload/stm32update.o
 #CC=gcc
 CC := /opt/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-gcc
 #CFLAGS = -Werror -Wall -g -O2
